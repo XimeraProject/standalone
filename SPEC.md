@@ -10,6 +10,10 @@ An answer blank
 
 An answer blank with a correct answer of 2x.
 
+`<div class="validator" data-validator="F + G == 17">...</div>`
+
+Create a "check work" button which evalulates the validator.
+
 `<div class="problem">...</div>`
 
 A problem.
