@@ -6,6 +6,10 @@ The HTML format for interactive documents.
 
 An answer blank
 
+`<div class="answer" id="F" data-correct="2x"></div>`
+
+An answer blank with a correct answer of 2x.
+
 `<div class="problem">...</div>`
 
 A problem.
