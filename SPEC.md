@@ -60,9 +60,3 @@ A problem.
 `<span class="math">expression</span>`
 
 Parse the string `expression` as determined by `data-input`.  Display the output as determined by `data-output`.  If any symbols in `expression` have been bound to variables, the output will automatically update if those variables change.
-
-`<span class="math" id="F">expression</span>`
-
-In addition to displaying the output, save the result to the javascript variable F.
-
-
