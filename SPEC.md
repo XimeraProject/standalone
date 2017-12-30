@@ -15,9 +15,13 @@ After parsing math expressions, the symbol x in the parsed expression will be re
 
 The symbol x will remain as a symbol.
 
-`data-input="text"`
+`data-parser="text"`
 
 Strings will be parsed into math-expressions using the specified parser.  Valid options are "text" and "latex".  Default value is "text".
+
+`data-parser-xx="value"`
+
+Pass the parameter `xx="value"` to the parser.
 
 `data-output="latex"`
 
@@ -25,7 +29,7 @@ The "math" class will output the resulting math expression in this format.  Vali
 
 `data-split-symbols`
 
-When parsing math expressions from text, split multiple character symbols into the product of single character symbols.  If true, symbols specified as unsplitSymbols will remain unsplit.  Does not apply to latex parser, which always splits mult-as unsplit symbols can be indicated as "\myvar".  Default value is "true".
+When parsing math expressions from text, split multiple character symbols into the product of single character symbols.  If true, symbols specified as unsplitSymbols will remain unsplit.  Does not apply to latex parser, which always splits mult-as unsplit symbols can be indicated as "\myvar".  Default value is "true". [Delete this option, as could use `data-parser-splitSymbols="false"?]
 
 
 ## Answer blanks
@@ -59,4 +63,4 @@ A problem.
 
 `<span class="math">expression</span>`
 
-Parse the string `expression` as determined by `data-input`.  Display the output as determined by `data-output`.  If any symbols in `expression` have been bound to variables, the output will automatically update if those variables change.
+Parse the string `expression` as determined by `data-parser`.  Display the output as determined by `data-output`.  If any symbols in `expression` have been bound to variables, the output will automatically update if those variables change.
