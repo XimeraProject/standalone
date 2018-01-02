@@ -51,7 +51,11 @@ The canonical correct answer for the answer blank.  Will be used to validate the
 
 `data-validator = "Javascript expression"`
 
-If present, will override any `data-correct` value.  The validator is evaluated by the following sequence.  First, if `id` is defined, the result of applying `data-class` to the user input string will be assigned to the Javascript variable defined by the `id`.  Second, `Javascript expression` will be evaluated.  Third, if the result of step two is a Javascript function, that function will be applied to the result of applying `data-class` to the user input string.  Fourth, if the result is a boolean or a number between 0 and 1, then answer will be evaluated as correct, incorrect, or partially correct. If the result is a Promise, then wait for the Promise to be resolved and apply step four to the resolved promise.  Return an error for any other result of the validator. 
+If present, will override the standard comparison between the user input string and the `data-correct` value.  The validator is evaluated by the following sequence.  
+1. If `id` is defined, the result of applying `data-class` to the user input string will be assigned to the Javascript variable defined by the `id`.
+2. `Javascript expression` will be evaluated.
+3. If the result from step 2 is a Javascript function, that function will be called with one or two arguments.  The first argument will be the result of applying `data-class` to the user input string.  If `data-correct` is specified, the second argument will be the result of applying `data-class` to the value of `data-correct`.
+4. If the result from step 2 or 3 is a boolean or a number between 0 and 1, then the response will be evaluated as correct, incorrect, or partially correct as given by the number. If the result is a Promise, then wait for the Promise to be resolved and apply step 4 to the resolved promise.  Return an error for any other result of the validator. 
 
 ### Answer blank examples
 
@@ -77,7 +81,7 @@ Since above attributes apply to the parsing of `data-correct` but not to the use
 
 ## Validators
 
-A validator can enclose a number of answer blanks.  The enclosed answer blanks do not have individual check work buttons, but instead there will be a single "check work" button which evaluates the validator.  Any `data-validator` or `data-correct` attributes of the answer blanks are not used in validation.  The validator must contain a `data-validator` attribute which functions using the same algorithm as a `data-validator` in an answer blank, with two differences: (A) step one is applied to all enclosed answer blanks, and (B) in step three, if the result is a function, it is passed the results of all enclosed answer blanks, in the order they appear.
+A validator can enclose a number of answer blanks.  The enclosed answer blanks do not have individual check work buttons, but instead there will be a single "check work" button which evaluates the validator.  Any `data-validator` or `data-correct` attributes of the answer blanks are not used in validation.  The validator must contain a `data-validator` attribute which functions using the same algorithm as a `data-validator` in an answer blank, with two differences: (A) step 1 is applied to all enclosed answer blanks, and (B) in step 3, if the result is a function, it is passed the results of all enclosed answer blanks, in the order they appear.
 
 The following examples illustrate how a validator might be used.
 
