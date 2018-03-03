@@ -9,9 +9,10 @@ The following html attributes influence the behavior of answer blanks and math e
 
 ### Generic attributes
 
-`data-class="Cls"`
+`data-class="Cls"`\
+`data-correct-class="Cls"`
 
-The class used to process both user answer blank input and the `data-correct` attribute strings.  The function Cls will be called with the string as input. Exception, if Cls is "MathExpression", the parser specified by `data-parser` will be used.  Default value is "MathExpression".
+The class `data-class` is used to process both user answer blank input, and the class `data-correct-class` is used to process the `data-correct` attribute string.  The function Cls will be called with the string as input. Exception, if Cls is "MathExpression", the parser specified by `data-parser` will be used.  Default value is "MathExpression".
 
 
 ### MathExpression attributes
@@ -19,6 +20,8 @@ The class used to process both user answer blank input and the `data-correct` at
 `data-bind-x="f"`
 
 After parsing math expressions, the symbol x in the parsed expression will be replaced with f.  f must be the name of a javascript variable that is either a math expression or a constant string/number.  If f is a constant string, it will be parsed into a math expression.  Does not apply to parsing of user answer blank input.
+
+If x is multicharacter, should it automatically set x as an unsplit symbol for text parser?
 
 `data-unbind-x`
 
@@ -34,7 +37,7 @@ Pass the parameter `xx="value"` to the parser.
 
 `data-output="latex"`
 
-The "math" class will output the resulting math expression in this format.  Valid options are "text", "latex", and "guppy".  Default value is "latex".
+The "math" class will output the resulting math expression in this format.  Valid options are "text", "latex", "guppy", and "none".  Default value is "latex".
 
 
 ## Answer blanks
@@ -47,14 +50,14 @@ The user response, after passing to `data-class`, will be assigned to the javasc
 
 `data-correct="2x"`
 
-The canonical correct answer for the answer blank.  Will be used to validate the user response unless overridden by a validator.  If used to validate, the `data-correct` string will be passed to `data-class` and the user response string will be passed to `data-class`.  The response will be considered correct if those two results are equal.
+The canonical correct answer for the answer blank.  Will be used to validate the user response unless overridden by a validator.  If used to validate, the `data-correct` string will be passed to `data-correct-class` and the user response string will be passed to `data-class`.  The response will be considered correct if those two results are equal.  (Todo: describe how to determine equality, especially if the two classes are different.)
 
 `data-validator = "Javascript expression"`
 
 If present, will override the standard comparison between the user input string and the `data-correct` value.  The validator is evaluated by the following sequence.  
 1. If `id` is defined, the result of applying `data-class` to the user input string will be assigned to the Javascript variable defined by the `id`.
 2. `Javascript expression` will be evaluated.
-3. If the result from step 2 is a Javascript function, that function will be called with one or two arguments.  The first argument will be the result of applying `data-class` to the user input string.  If `data-correct` is specified, the second argument will be the result of applying `data-class` to the value of `data-correct`.
+3. If the result from step 2 is a Javascript function, that function will be called with one or two arguments.  The first argument will be the result of applying `data-class` to the user input string.  If `data-correct` is specified, the second argument will be the result of applying `data-correct-class` to the value of `data-correct`.
 4. If the result from step 2 or 3 is a boolean or a number between 0 and 1, then the response will be evaluated as correct, incorrect, or partially correct as given by the number. If the result is a Promise, then wait for the Promise to be resolved and apply step 4 to the resolved promise.  Return an error for any other result of the validator. 
 
 ### Answer blank examples
@@ -67,7 +70,7 @@ An answer blank.  Response, after passing to `data-class`, will be assigned to t
 
 An answer blank with a correct answer of 2x.  Automatically display a "check work" button, unless enclosed in a validator.
 
-`<div class="answer" id="F" data-correct="2" data-class="Number"></div>`
+`<div class="answer" id="F" data-correct="2" data-class="Number" data-correct-class="Number"></div>`
 
 Answer blank with a correct answer of `Number("2")`.  User response string `resp` will be correct if `Number(resp) == Number("2")`.
 
